@@ -4,7 +4,6 @@ import './App.css';
 import Menu from './components/MenuComponent';
 
 import { DISHES } from './shared/dishes'
-import { render } from 'react-dom';
 
 class App extends Component {
 
