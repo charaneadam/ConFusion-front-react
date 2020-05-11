@@ -1,5 +1,6 @@
 import React from "react";
-import { Card, CardImg, CardBody, CardText, CardTitle } from "reactstrap";
+import { Card, CardImg, CardBody, CardText, CardTitle, Breadcrumb, BreadcrumbItem } from "reactstrap";
+import { Link } from "react-router-dom";
 
 
 const formatDate = (date) => {
@@ -61,6 +62,18 @@ const RenderComments = ({ comments }) => {
 function Dishdetail({ dish }) {
   return dish ? (
     <div className="container">
+
+      <div className="row">
+        <Breadcrumb>
+          <BreadcrumbItem><Link to="/home">Home</Link></BreadcrumbItem>
+          <BreadcrumbItem><Link to="/menu">Menu</Link></BreadcrumbItem>
+          <BreadcrumbItem active>{dish.name}</BreadcrumbItem>
+        </Breadcrumb>
+        <div className="col-12">
+          <h3>{dish.name}</h3><hr />
+        </div>
+      </div>
+
       <div className="row">
         <div className="col-12 col-md-5 m-1">
           <RenderDish dish={dish} />
