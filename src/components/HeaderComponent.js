@@ -32,11 +32,12 @@ class Header extends Component {
     alert("Username: " + this.username.value + " Password: " + this.password.value + " Remember: " + this.remember.checked);
     event.preventDefault();
 
-  }
+  };
 
   render() {
-    return (
-      <>
+
+    const NavBar = () => {
+      return (
         <Navbar dark expand="md">
           <div className="container">
             <NavbarToggler onClick={this.toggleNav} />
@@ -48,34 +49,39 @@ class Header extends Component {
                 <NavItem>
                   <NavLink className="nav-link" to="/home">
                     <span className="fa fa-home fa-lg"></span> Home
-                  </NavLink>
+                    </NavLink>
                 </NavItem>
                 <NavItem>
                   <NavLink className="nav-link" to="/aboutus">
                     <span className="fa fa-info fa-lg"></span> About us
-                  </NavLink>
+                    </NavLink>
                 </NavItem>
                 <NavItem>
                   <NavLink className="nav-link" to="/menu">
                     <span className="fa fa-list fa-lg"></span> Menu
-                  </NavLink>
+                    </NavLink>
                 </NavItem>
                 <NavItem>
                   <NavLink className="nav-link" to="/contactus">
                     <span className="fa fa-address-card fa-lg"></span> Contact us
-                  </NavLink>
+                    </NavLink>
                 </NavItem>
               </Nav>
               <Nav className="ml-auto" navbar>
                 <NavItem>
                   <Button outline onClick={this.toggleModal}>
                     <span className="fa fa-sign-in fa-lg"></span> Login
-                  </Button>
+                    </Button>
                 </NavItem>
               </Nav>
             </Collapse>
           </div>
         </Navbar>
+      );
+    }
+
+    const MainJumbotron = () => {
+      return (
         <Jumbotron>
           <div className="container">
             <div className="row row-header">
@@ -87,6 +93,11 @@ class Header extends Component {
             </div>
           </div>
         </Jumbotron>
+      )
+    }
+
+    const LoginModal = () => {
+      return (
         <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
           <ModalHeader toggle={this.toggleModal}>Login</ModalHeader>
           <ModalBody>
@@ -112,6 +123,14 @@ class Header extends Component {
             </Form>
           </ModalBody>
         </Modal>
+      )
+    }
+
+    return (
+      <>
+        <NavBar />
+        <MainJumbotron />
+        <LoginModal />
       </>
     )
   }
