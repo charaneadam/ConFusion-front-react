@@ -57,7 +57,7 @@ class RenderComments extends Component {
   handleSubmit(values) {
     console.log("current state is : " + JSON.stringify(values));
     alert("current state is : " + JSON.stringify(values));
-    //event.preventDefault();
+    this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
   }
 
   render() {
@@ -85,9 +85,9 @@ class RenderComments extends Component {
               <Row><Col>Your name</Col></Row>
               <Row className="form-group">
                 <Col>
-                  <Control.text model=".name" name="name" className="form-control"
+                  <Control.text model=".author" name="author" className="form-control"
                     validators={{required, maxLength:maxLength(15), minLength:minLength(3)}} />
-                    <Errors className="text-danger" model=".name" show="touched" messages={{
+                    <Errors className="text-danger" model=".author" show="touched" messages={{
                     required: "Required",
                     minLength: "Must be greater than 3 characters",
                     maxLength: "Must be 15 characters or less"
@@ -153,7 +153,7 @@ class RenderComments extends Component {
   }
 }
 
-function Dishdetail({ dish, comments }) {
+function Dishdetail({ dish, comments, addComment }) {
   return dish ? (
     <div className="container">
 
@@ -173,7 +173,7 @@ function Dishdetail({ dish, comments }) {
           <RenderDish dish={dish} />
         </div>
         <div className="col-12 col-md-5 m-1">
-          <RenderComments comments={comments} />
+          <RenderComments comments={comments} addComment={addComment} dishId={dish.id} />
         </div>
       </div>
     </div>
