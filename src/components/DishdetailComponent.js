@@ -6,6 +6,8 @@ import {
 import { Link } from "react-router-dom";
 import { Control, LocalForm, Errors } from 'react-redux-form';
 
+import { Loading } from './LoadingComponent';
+
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => !(val) || (val.length >= len);
@@ -153,7 +155,27 @@ class RenderComments extends Component {
   }
 }
 
-function Dishdetail({ dish, comments, addComment }) {
+function Dishdetail({ dish, comments, addComment, isLoading, errorMessage }) {
+  if(isLoading){
+    return (
+      <div className="container">
+        <div className="row">
+          <Loading />
+        </div>
+      </div>
+    );
+  }
+  else if(errorMessage){
+    return (
+      <div className="container">
+        <div className="row">
+          <div className="col-12">
+            <h4>{errorMessage}</h4>
+          </div>
+        </div>
+      </div>
+    );
+  }
   return dish ? (
     <div className="container">
 
