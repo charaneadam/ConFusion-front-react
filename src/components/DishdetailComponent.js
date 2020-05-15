@@ -136,7 +136,7 @@ class RenderComments extends Component {
             {list}
           </ul>
           <Button outline onClick={this.toggleModal}>
-            <i class="fa fa-pencil" aria-hidden="true"></i> Submit comment
+            <i className="fa fa-pencil" aria-hidden="true"></i> Submit comment
           </Button>
           <SubmitCommentModal />
         </div>
@@ -146,7 +146,7 @@ class RenderComments extends Component {
       return (
         <div>
           <Button outline onClick={this.toggleModal}>
-            <i class="fa fa-pencil" aria-hidden="true"></i> Submit comment
+            <i className="fa fa-pencil" aria-hidden="true"></i> Submit comment
           </Button>
           <SubmitCommentModal />
         </div>
