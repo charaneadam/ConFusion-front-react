@@ -2,11 +2,23 @@ import React from 'react';
 import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
-function RenderLeader({ leader }) {
+import { baseUrl } from '../shared/baseUrl';
+import { Loading } from './LoadingComponent';
+
+function RenderLeader({ leader, isLoading, errorMessage }) {
+  if (isLoading) {
+    return (
+      <Loading />
+    );
+  } else if (errorMessage) {
+    return (
+      <h4>{errorMessage}</h4>
+    );
+  }
   return (
-    <Media key={leader.id} tag="li">
+    <Media tag="li">
       <Media left middle>
-        <Media object src={leader.image} alt={leader.name} />
+        <Media object src={baseUrl + leader.image} alt={leader.name} />
       </Media>
       <Media body className="ml-5">
         <Media heading className="mt-0 mb-1">{leader.name}</Media>
@@ -18,10 +30,11 @@ function RenderLeader({ leader }) {
 }
 
 function About(props) {
-
-  const leaders = props.leaders.map((leader) => {
+  const isLoading = props.leaders.isLoading;
+  const errorMessage = props.leaders.errorMessage;
+  const leaders = props.leaders.leaders.map((leader) => {
     return (
-      <RenderLeader leader={leader} />
+      <RenderLeader key={leader.id} leader={leader} isLoading={isLoading} errorMessage={errorMessage} />
     );
   });
 
