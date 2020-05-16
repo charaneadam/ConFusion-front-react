@@ -61,7 +61,7 @@ class RenderComments extends Component {
   handleSubmit(values) {
     console.log("current state is : " + JSON.stringify(values));
     alert("current state is : " + JSON.stringify(values));
-    this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
+    this.props.postComment(this.props.dishId, values.rating, values.author, values.comment);
   }
 
   render() {
@@ -120,13 +120,13 @@ class RenderComments extends Component {
 
     const comments = this.props.comments;
     if (comments != null) {
-      let list = comments.map((comments) => {
-        let date = comments.date
+      let list = comments.map((comment) => {
+        let date = comment.date
         return (
-          <li key={comments.id} >
+          <li key={comment.id} >
             <div>
-              <p>{comments.comment}</p>
-              <p>--{comments.author},{formatDate({ date })}</p>
+              <p>{comment.comment}</p>
+              <p>--{comment.author},{formatDate({ date })}</p>
             </div>
           </li>
         )
@@ -157,7 +157,7 @@ class RenderComments extends Component {
   }
 }
 
-function Dishdetail({ dish, comments, addComment, isLoading, errorMessage }) {
+function Dishdetail({ dish, comments, postComment, isLoading, errorMessage }) {
   if(isLoading){
     return (
       <div className="container">
@@ -197,7 +197,7 @@ function Dishdetail({ dish, comments, addComment, isLoading, errorMessage }) {
           <RenderDish dish={dish} />
         </div>
         <div className="col-12 col-md-5 m-1">
-          <RenderComments comments={comments} addComment={addComment} dishId={dish.id} />
+          <RenderComments comments={comments} postComment={postComment} dishId={dish.id} />
         </div>
       </div>
     </div>

@@ -12,7 +12,7 @@ import Contact from './ContactComponent';
 import About from './AboutComponent';
 import Footer from './FooterComponent';
 
-import { addComment, fetchDishes, fetchComments, fetchPromotions, fetchLeaders } from '../redux/ActionCreators';
+import { postComment, fetchDishes, fetchComments, fetchPromotions, fetchLeaders } from '../redux/ActionCreators';
 
 const mapStoreToprops = state => {
   return {
@@ -24,7 +24,7 @@ const mapStoreToprops = state => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment)),
+  postComment: (dishId, rating, author, comment) => dispatch(postComment(dishId, rating, author, comment)),
   fetchDishes: () => {dispatch(fetchDishes())},
   resetFeedbackForm: () => { dispatch(actions.reset('feedback')) },
   fetchComments: () => {dispatch(fetchComments())},
@@ -46,7 +46,7 @@ class Main extends Component {
     const HomePage = () => {
       return (
         <Home 
-          dish={this.props.dishes.dishes.filter((dish) => dish.featured)[0]} 
+          dish={this.props.dishes.dishes.filter((dish) => dish.featured)[0]}
           dishesLoading={this.props.dishes.isLoading}
           dishesErrorMessage={this.props.dishes.errorMessage}
 
@@ -69,9 +69,9 @@ class Main extends Component {
           isLoading={this.props.dishes.isLoading}
           errorMessage={this.props.dishes.errorMessage}
           
-          comments={this.props.comments.comments.filter((comment) => comment.commentId === parseInt(match.params.commentId, 10))}
+          comments={this.props.comments.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId, 10))}
           commentsErrorMessage={this.props.comments.errorMessage}
-          addComment={this.props.addComment}
+          postComment={this.props.postComment}
           />
       );
     };
