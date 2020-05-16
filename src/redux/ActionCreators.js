@@ -3,11 +3,25 @@ import { baseUrl } from '../shared/baseUrl';
 
 
 // Dish Action creators
-export const fetchDishes = () => (dispath) => {
-    dispath(dishesLoading(true));
+export const fetchDishes = () => (dispatch) => {
+    dispatch(dishesLoading(true));
     fetch(baseUrl + 'dishes')
+        .then(response => {
+            if(response.ok){
+                return response;
+            } else {
+                var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                error.response = response;
+                throw error;
+            }
+        },
+        error => {
+            var errorMessage = new Error(error.message);
+            throw errorMessage; 
+        })
         .then(response => response.json())
-        .then(dishes => dispath(addDishes(dishes)));
+        .then(dishes => dispatch(addDishes(dishes)))
+        .catch(error => dispatch(dishesFailed(error.message)));
 };
 
 export const dishesLoading = () => ({
@@ -36,11 +50,25 @@ export const addComment = (dishId, rating, author, comment) => ({
     }
 });
 
-export const fetchComments = () => (dispath) => {
-    dispath(dishesLoading(true));
+export const fetchComments = () => (dispatch) => {
+    dispatch(dishesLoading(true));
     fetch(baseUrl + 'comments')
+        .then(response => {
+            if(response.ok){
+                return response;
+            } else {
+                var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                error.response = response;
+                throw error;
+            }
+        },
+        error => {
+            var errorMessage = new Error(error.message);
+            throw errorMessage; 
+        })
         .then(response => response.json())
-        .then(comments => dispath(addComments(comments)));
+        .then(comments => dispatch(addComments(comments)))
+        .catch(error => dispatch(commentsFailed(error.message)));
 };
 
 export const commentsFailed = (errorMessage) => ({
@@ -56,18 +84,32 @@ export const addComments = (comments) => ({
 
 
 // Promotions Action creators
-export const fetchPromotions = () => (dispath) => {
-    dispath(promosLoading(true));
+export const fetchPromotions = () => (dispatch) => {
+    dispatch(promosLoading(true));
     fetch(baseUrl + 'promotions')
+        .then(response => {
+            if(response.ok){
+                return response;
+            } else {
+                const error = new Error('Error ' + response.status + ': ' + response.statusText);
+                error.response = response;
+                throw error;
+            }
+        },
+        error => {
+            const errorMessage = new Error(error.message);
+            throw errorMessage; 
+        })
         .then(response => response.json())
-        .then(promos => dispath(addPromotions(promos)));
+        .then(promos => dispatch(addPromotions(promos)))
+        .catch(error => dispatch(promotionsFailed(error.message)));
 };
 
 export const promosLoading = () => ({
     type: ActionTypes.PROMOTIONS_LOADING,
 });
 
-export const promosFailed = (errorMessage) => ({
+export const promotionsFailed = (errorMessage) => ({
     type: ActionTypes.PROMOTIONS_FAILED,
     payload: errorMessage,
 });
@@ -79,11 +121,25 @@ export const addPromotions = (promos) => ({
 
 
 // Leader Action creators
-export const fetchLeaders = () => (dispath) => {
-    dispath(leadersLoading(true));
+export const fetchLeaders = () => (dispatch) => {
+    dispatch(leadersLoading(true));
     fetch(baseUrl + 'leaders')
+        .then(response => {
+            if(response.ok){
+                return response;
+            } else {
+                const error = new Error('Error ' + response.status + ': ' + response.statusText);
+                error.response = response;
+                throw error;
+            }
+        },
+        error => {
+            const errorMessage = new Error(error.message);
+            throw errorMessage; 
+        })
         .then(response => response.json())
-        .then(leaders => dispath(addLeaders(leaders)));
+        .then(leaders => dispatch(addLeaders(leaders)))
+        .catch(error => dispatch(leadersFailed(error.message)));
 };
 
 export const leadersLoading = () => ({
