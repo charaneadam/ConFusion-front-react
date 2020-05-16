@@ -12,27 +12,33 @@ import Contact from './ContactComponent';
 import About from './AboutComponent';
 import Footer from './FooterComponent';
 
-import { addComment, fetchDishes } from '../redux/ActionCreators';
+import { addComment, fetchDishes, fetchComments, fetchPromotions, fetchLeaders } from '../redux/ActionCreators';
 
 const mapStoreToprops = state => {
   return {
     dishes: state.dishes,
     comments: state.comments,
     promotions: state.promotions,
-    leaders: state.promotions,
+    leaders: state.leaders,
   }
 };
 
-const mapDispatchToPtops = (dispatch) => ({
+const mapDispatchToProps = (dispatch) => ({
   addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment)),
   fetchDishes: () => {dispatch(fetchDishes())},
-  resetFeedbackForm: () => { dispatch(actions.reset('feedback')) }
+  resetFeedbackForm: () => { dispatch(actions.reset('feedback')) },
+  fetchComments: () => {dispatch(fetchComments())},
+  fetchPromotions: () => {dispatch(fetchPromotions())},
+  fetchLeaders: () => {dispatch(fetchLeaders())},
 });
 
 class Main extends Component {
 
   componentDidMount(){
     this.props.fetchDishes();
+    this.props.fetchComments();
+    this.props.fetchPromotions();
+    this.props.fetchLeaders();
   }
 
   render() {
@@ -43,19 +49,30 @@ class Main extends Component {
           dish={this.props.dishes.dishes.filter((dish) => dish.featured)[0]} 
           dishesLoading={this.props.dishes.isLoading}
           dishesErrorMessage={this.props.dishes.errorMessage}
-          promotion={this.props.promotions.filter((promotion) => promotion.featured)[0]} 
-          leader={this.props.leaders.filter((leader) => leader.featured)[0]}
+
+          promotion={this.props.promotions.promotions.filter((promotion) => promotion.featured)[0]} 
+          promotionsLoading={this.props.promotions.isLoading}
+          promotionsErrorMessage={this.props.promotions.errorMessage}
+
+          leader={this.props.leaders.leaders.filter((leader) => leader.featured)[0]} 
+          leadersLoading={this.props.leaders.isLoading}
+          leadersErrorMessage={this.props.leaders.errorMessage}
+
         />
       );
     };
 
     const DishWithId = ({ match }) => {
       return (
-        <Dishdetail dish={this.props.dishes.dishes.filter((dish) => dish.id === parseInt(match.params.dishId, 10))[0]}
+        <Dishdetail 
+          dish={this.props.dishes.dishes.filter((dish) => dish.id === parseInt(match.params.dishId, 10))[0]}
           isLoading={this.props.dishes.isLoading}
           errorMessage={this.props.dishes.errorMessage}
-          comments={this.props.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId, 10))}
-          addComment={this.props.addComment} />
+          
+          comments={this.props.comments.comments.filter((comment) => comment.commentId === parseInt(match.params.commentId, 10))}
+          commentsErrorMessage={this.props.comments.errorMessage}
+          addComment={this.props.addComment}
+          />
       );
     };
 
@@ -77,4 +94,4 @@ class Main extends Component {
 
 }
 
-export default withRouter(connect(mapStoreToprops, mapDispatchToPtops)(Main));
+export default withRouter(connect(mapStoreToprops, mapDispatchToProps)(Main));
